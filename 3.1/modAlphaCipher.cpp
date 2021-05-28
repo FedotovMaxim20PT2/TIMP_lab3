@@ -6,7 +6,7 @@
 
 using namespace std;
 
-std::wstring numAlpha = L"юабцдефгхийклмнопярстужвьыэшзщчъ";
+std::wstring numAlpha = L"п░п▒п▓п⌠п■п∙п√п≈п≤п≥п п⌡п°п²п·п÷п═п║п╒пёп╓п╔п╕п╖п╗п╘п╛п╚п╙п╜п╝п╞";
 std::map <wchar_t, int> alphaNum;
 
 modAlphaCipher::modAlphaCipher(const std::wstring& skey)
@@ -62,9 +62,9 @@ inline std::wstring modAlphaCipher::getValidKey(const std::wstring & in)
     std::locale loc("ru_RU.UTF-8");
 
     for (wchar_t c : in) {
-        if (c > L'ю' && c < L'ъ') {
+        if (c > L'п░' && c < L'п╞') {
             output += c;
-        } else if (c > L'Ю' && c < L'Ъ') {
+        } else if (c > L'п╟' && c < L'я▐') {
             output += toupper(c, loc);
         } else {
             throw cipher_error("Invalid key");
@@ -82,9 +82,9 @@ inline std::wstring modAlphaCipher::getValidOpenText(const std::wstring & in)
     std::locale loc("ru_RU.UTF-8");
 
     for (wchar_t c : in) {
-        if (c > L'ю' && c < L'ъ') {
+        if (c > L'п░' && c < L'п╞') {
             output += c;
-        } else if (c > L'Ю' && c < L'Ъ') {
+        } else if (c > L'п╟' && c < L'я▐') {
             output += toupper(c, loc);
         } else {
             throw cipher_error("Invalid Open Text");
@@ -102,7 +102,7 @@ inline std::wstring modAlphaCipher::getValidCipherText(const std::wstring & in)
     std::locale loc("ru_RU.UTF-8");
 
     for (wchar_t c : in) {
-        if (c > L'ю' && c < L'ъ') {
+        if (c > L'п░' && c < L'п╞') {
             output += c;
         } else {
             throw cipher_error("Invalid Open Text");
