@@ -3,35 +3,35 @@
 
 SUITE(KeyTest) {
     TEST(ValidKey) {
-        CHECK_EQUAL("¡¬√¡¬",modAlphaCipher("¡¬√").encrypt("¿¿¿¿¿"));
+        CHECK_EQUAL("–ë–í–ì–ë–í",modAlphaCipher("–ë–í–ì").encrypt("–ê–ê–ê–ê–ê"));
     }
     TEST(LongKey) {
-        CHECK_EQUAL("¡¬√ƒ≈",modAlphaCipher("¡¬√ƒ≈∆«»… ").encrypt("¿¿¿¿¿"));
+        CHECK_EQUAL("–ë–í–ì–î–ï",modAlphaCipher("–ë–í–ì–î–ï–ñ–ó–ò–ô–ö").encrypt("–ê–ê–ê–ê–ê"));
     }
     TEST(LowCaseKey) {
-        CHECK_EQUAL("¡¬√¡¬",modAlphaCipher("·‚„").encrypt("¿¿¿¿¿"));
+        CHECK_EQUAL("–ë–í–ì–ë–í",modAlphaCipher("–±–≤–≥").encrypt("–ê–ê–ê–ê–ê"));
     }
     TEST(DigitsInKey) {
-        CHECK_THROW(modAlphaCipher cp("¡1"),cipher_error);
+        CHECK_THROW(modAlphaCipher cp("–ë1"),cipher_error);
     }
     TEST(PunctuationInKey) {
-        CHECK_THROW(modAlphaCipher cp("¡!!!"),cipher_error);
+        CHECK_THROW(modAlphaCipher cp("–ë!!!"),cipher_error);
     }
     TEST(WhitespaceInKey) {
-        CHECK_THROW(modAlphaCipher cp("¡¬ √"),cipher_error);
+        CHECK_THROW(modAlphaCipher cp("–ë–í –ì"),cipher_error);
     }
     TEST(EmptyKey) {
         CHECK_THROW(modAlphaCipher cp(""),cipher_error);
     }
     TEST(WeakKey) {
-        CHECK_THROW(modAlphaCipher cp("¿¿¿"),cipher_error);
+        CHECK_THROW(modAlphaCipher cp("–ê–ê–ê"),cipher_error);
     }
 }
 
 struct KeyB_fixture {
     modAlphaCipher * p;
     KeyB_fixture() {
-        p = new modAlphaCipher("¡");
+        p = new modAlphaCipher("–ë");
     }
     ~KeyB_fixture() {
         delete p;
@@ -41,19 +41,19 @@ struct KeyB_fixture {
 SUITE(EncryptTest)
 {
     TEST_FIXTURE(KeyB_fixture, UpCaseString) {
-        CHECK_EQUAL("¡¬√ƒ≈∆",
-                    p->encrypt("¿¡¬√ƒ≈"));
+        CHECK_EQUAL("–ë–í–ì–î–ï–ñ",
+                    p->encrypt("–ê–ë–í–ì–î–ï"));
     }
     TEST_FIXTURE(KeyB_fixture, LowCaseString) {
-        CHECK_EQUAL("¡¬√ƒ≈∆",
-                    p->encrypt("‡·‚„‰Â"));
+        CHECK_EQUAL("–ë–í–ì–î–ï–ñ",
+                    p->encrypt("–∞–±–≤–≥–¥–µ"));
     }
     TEST_FIXTURE(KeyB_fixture, StringWithWhitspaceAndPunct) {
-        CHECK_EQUAL("¡¬√ƒ≈∆«» ",
-                    p>encrypt("¿¡¬ √ƒ≈ ∆«»!!!"));
+        CHECK_EQUAL("–ë–í–ì–î–ï–ñ–ó–ò–ö",
+                    p‚Üíencrypt("–ê–ë–í –ì–î–ï –ñ–ó–ò!!!"));
     }
     TEST_FIXTURE(KeyB_fixture, StringWithNumbers) {
-        CHECK_EQUAL("¡¬√ƒ", p->encrypt("¿¡¬√123"));
+        CHECK_EQUAL("–ë–í–ì–î", p->encrypt("–ê–ë–í–ì123"));
     }
     TEST_FIXTURE(KeyB_fixture, EmptyString) {
         CHECK_THROW(p->encrypt(""),cipher_error);
@@ -62,25 +62,25 @@ SUITE(EncryptTest)
         CHECK_THROW(p->encrypt("1234+4321=5555"),cipher_error);
     }
     TEST(MaxShiftKey) {
-        CHECK_EQUAL("¿¡¬√ƒ≈",
-                    modAlphaCipher("ﬂ").encrypt("ﬂ¿¡¬√ƒ"));
+        CHECK_EQUAL("–ê–ë–í–ì–î–ï",
+                    modAlphaCipher("–Ø").encrypt("–Ø–ê–ë–í–ì–î"));
     }
 }
 
 SUITE(DecryptText)
 {
     TEST_FIXTURE(KeyB_fixture, UpCaseString) {
-        CHECK_EQUAL("¿¡¬√ƒ≈",
-                    p->decrypt("¡¬√ƒ≈∆"));
+        CHECK_EQUAL("–ê–ë–í–ì–î–ï",
+                    p->decrypt("–ë–í–ì–î–ï–ñ"));
     }
     TEST_FIXTURE(KeyB_fixture, LowCaseString) {
-        CHECK_THROW(p->decrypt("¡¬√‰ÂÊ"),cipher_error);
+        CHECK_THROW(p->decrypt("–ë–í–ì–¥–µ–∂"),cipher_error);
     }
     TEST_FIXTURE(KeyB_fixture, WhitespaceString) {
-        CHECK_THROW(p>decrypt("¡¬,√ƒ≈ ∆«!!!"),cipher_error);
+        CHECK_THROW(p‚Üídecrypt("–ë–í,–ì–î–ï –ñ–ó!!!"),cipher_error);
     }
     TEST_FIXTURE(KeyB_fixture, DigitsString) {
-        CHECK_THROW(p->decrypt("¡¬√123"),cipher_error);
+        CHECK_THROW(p->decrypt("–ë–í–ì123"),cipher_error);
     }
     TEST_FIXTURE(KeyB_fixture, PunctString) {
         CHECK_THROW(p->decrypt("1234+4321=5555"),cipher_error);
@@ -89,8 +89,8 @@ SUITE(DecryptText)
         CHECK_THROW(p->decrypt(""),cipher_error);
     }
     TEST(MaxShiftKey) {
-        CHECK_EQUAL("ﬂ¿¡¬√ƒ",
-                    modAlphaCipher("ﬂ").decrypt("¿¡¬√ƒ≈"));
+        CHECK_EQUAL("–Ø–ê–ë–í–ì–î",
+                    modAlphaCipher("–Ø").decrypt("–ê–ë–í–ì–î–ï"));
     }
 }
 
