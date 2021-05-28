@@ -54,7 +54,7 @@ SUITE(EncryptTest)
         CHECK_THROW(p->encrypt("ye", 2),encryptException);
     }
     TEST_FIXTURE(KeyB_fixture, Stringwithprep) {
-        CHECK_THROW(p>encrypt("little!redfox!!!", 2),encryptException);
+        CHECK_THROW(p→encrypt("little!redfox!!!", 2),encryptException);
     }
 }
 
@@ -72,7 +72,7 @@ SUITE(DecryptText)
         CHECK_THROW(p->decrypt("iteefx23", 2),encryptException);
     }
     TEST_FIXTURE(KeyB_fixture, Stringwithpunct) {
-        CHECK_THROW(p>decrypt("iteefx!!!", 2),encryptException);
+        CHECK_THROW(p→decrypt("iteefx!!!", 2),encryptException);
     }
     TEST_FIXTURE(KeyB_fixture, emptyString) {
         CHECK_THROW(p->decrypt("", 2),encryptException);
